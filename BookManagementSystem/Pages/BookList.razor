@@ -1,31 +1,48 @@
 ﻿@page "/"
 
-<div col="4" class="mt-5"> 
-    
-    <AddBook AddNewBook="AddNewBook" UpdateBook ="UpdateBook" SelectedBook ="SelectedBook"/>
-</div>
-<div col="5"><DisplayBook/>
+<div class="mx-5 row"> 
+    <div class="col-4 my-3">
+        <AddBook AddNewBook="AddNewBook" UpdateBook="UpdateBook" SelectedBook="SelectedBook" />
     </div>
-    @if(books.Count == 0)
-{
-    <p> No books available</p>
-}
-else
-{
-    @foreach (var book in books)
+    
+
+<div class="col-8 my-3">
+    @if (books.Count == 0)
     {
-        <DisplayBook bookDto="book"  DeleteId="DeleteBook" EditBook="EditBook"/>
+        <p> No books available</p>
     }
-}
+    else
+    {
+        <div class="d-flex">
+            @foreach (var book in books)
+            {
+                <DisplayBook bookDto="book" DeleteId="DeleteBook" EditBook="EditBook" />
+            }
+        </div>
+
+    }
+</div>
+</div>
 
 @code {
     public BookDto SelectedBook;
-    
+
     private List<BookDto> books = new List<BookDto>()
    {
        new BookDto()
       {
-        Id = Guid.NewGuid ()
+        Id = Guid.NewGuid (),
+        Title="Eat Pray Love",
+        Description ="How to Live a Happy Life",
+        Authors = new List<Author>()
+        {
+            new Author()
+            {
+                Id=1,
+                AuthName="Elizabeth Gilberts"
+            }
+        }
+          
       
       }
    };
