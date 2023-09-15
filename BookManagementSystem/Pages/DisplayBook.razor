@@ -9,8 +9,8 @@
 
 
     <div class="col">
-       <button type="button" @onclick="DeleteBook" class="btn btn-danger btn-sm">Delete</button>
-       @* <button type="button" class="btn btn-danger btn-lg" @onclick="(() => Edit(taskDto))">Edit</button>*@
+       <button type="button" @onclick="DeleteBook" class="btn btn-danger btn-lg">Delete</button>
+       <button type="button" class="btn btn-danger btn-lg" @onclick="(() => Edit(bookDto))">Edit</button>
     </div>
 
 </div>
@@ -18,13 +18,21 @@
 
     [Parameter]
     public BookDto bookDto { get; set; }
-   
+
 
     [Parameter]
     public EventCallback<Guid> DeleteId { get; set; }
+    [Parameter]
+
+    public EventCallback<BookDto> EditBook{ get; set; }
 
     public async Task DeleteBook()
     {
         await DeleteId.InvokeAsync(bookDto.Id);
+    }
+    public async Task Edit(BookDto editBook)
+    {
+        await EditBook.InvokeAsync(editBook);
+        Console.WriteLine(editBook.Id);
     }
 }

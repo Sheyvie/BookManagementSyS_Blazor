@@ -1,6 +1,9 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\BookManagementSystem",
+    "\\BookManagementSystem\\Pages"
   ],
+  "SelectedNode": "\\BookManagementSystem\\Pages\\AddBook.razor",
   "PreviewInSolutionExplorer": false
 }

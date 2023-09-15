@@ -32,8 +32,12 @@
     @* if you have two buttons, only one can have the type submit*@
     <button type="submit" @onclick="InsertNewBook" class=" mt-5 btn btn-primary">Submit</button>
 
+    <button type="button" @onclick="UpdateLibBook" class="btn btn-secondary mt-5">Update</button>
+
+
     @*To reset the form once an update has been added*@
     <button type="submit1" class=" mt-5 btn btn-secondary">Reset</button>
+
 
    
 
@@ -44,11 +48,11 @@
 
 
 @code {
-    
+    public bool IsEditing = false;
     public BookDto newBook = new BookDto()
         {
             Id = Guid.NewGuid()
-            
+
         };
     private void formSubmit()
     {
@@ -58,10 +62,28 @@
     [Parameter]
     public EventCallback<BookDto> AddNewBook { get; set; }
 
+    [Parameter]
+    public EventCallback<BookDto> UpdateBook { get; set; }
+
+    [Parameter]
+    public BookDto SelectedBook
+    {
+    get => newBook;
+    set
+        {
+            newBook = value ?? newBook;
+            IsEditing = value != null;
+        }
+    }
+
     public async Task InsertNewBook()
     {
         await AddNewBook.InvokeAsync(newBook);
         newBook = new BookDto();
+    }
+    public async Task UpdateLibBook()
+    {
+        await UpdateBook.InvokeAsync(newBook);
     }
     
 }

@@ -2,7 +2,7 @@
 
 <div col="4" class="mt-5"> 
     
-    <AddBook AddNewBook="AddNewBook" />
+    <AddBook AddNewBook="AddNewBook" UpdateBook ="UpdateBook" SelectedBook ="SelectedBook"/>
 </div>
 <div col="5"><DisplayBook/>
     </div>
@@ -14,12 +14,12 @@ else
 {
     @foreach (var book in books)
     {
-        <DisplayBook bookDto="book"  DeleteId="DeleteBook"/>
+        <DisplayBook bookDto="book"  DeleteId="DeleteBook" EditBook="EditBook"/>
     }
 }
 
 @code {
-
+    public BookDto SelectedBook;
     
     private List<BookDto> books = new List<BookDto>()
    {
@@ -45,6 +45,16 @@ else
         {
             Console.WriteLine(ex.Message);
         }
+    }
+    public void UpdateBook(BookDto books)
+    {
+        var updatebookIndex = this.books.FindIndex(x => x.Id == books.Id);
+        this.books[updatebookIndex] = books;
+    }
+
+    public void EditBook(BookDto books)
+    {
+        SelectedBook = books;
     }
 
 }
