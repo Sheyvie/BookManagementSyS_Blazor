@@ -42,8 +42,8 @@
                 AuthName="Elizabeth Gilberts"
             }
         }
-          
-      
+
+
       }
    };
 
@@ -67,6 +67,7 @@
     {
         var updatebookIndex = this.books.FindIndex(x => x.Id == books.Id);
         this.books[updatebookIndex] = books;
+        
     }
 
     public void EditBook(BookDto books)

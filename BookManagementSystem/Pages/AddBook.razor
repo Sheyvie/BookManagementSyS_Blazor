@@ -36,7 +36,7 @@
 
 
     @*To reset the form once an update has been added*@
-    <button type="submit1" class=" mt-5 btn btn-secondary">Reset</button>
+    <button type="reset" @onclick="@ResetBt" class=" mt-5  ml-2 btn btn-warning">Reset</button>
 
 
    
@@ -49,6 +49,7 @@
 
 @code {
     public bool IsEditing = false;
+    private bool resetForm = false;
     public BookDto newBook = new BookDto()
         {
             Id = Guid.NewGuid()
@@ -68,11 +69,12 @@
     [Parameter]
     public BookDto SelectedBook
     {
-    get => newBook;
-    set
+        get => newBook;
+        set
         {
             newBook = value ?? newBook;
             IsEditing = value != null;
+
         }
     }
 
@@ -84,6 +86,30 @@
     public async Task UpdateLibBook()
     {
         await UpdateBook.InvokeAsync(newBook);
+
     }
+
     
+    private void ResetBt()
+    {
+        
+        resetForm = true;
+    }
+       
+   
+    protected override void OnParametersSet()
+    {
+        if (resetForm)
+        {
+            SelectedBook = newBook;
+            IsEditing =false;
+            
+        }
+    }
+
+
+
+
+
+
 }
