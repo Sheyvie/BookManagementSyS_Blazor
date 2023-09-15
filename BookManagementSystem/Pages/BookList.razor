@@ -1,0 +1,50 @@
+﻿@page "/"
+
+<div col="4" class="mt-5"> 
+    
+    <AddBook AddNewBook="AddNewBook" />
+</div>
+<div col="5"><DisplayBook/>
+    </div>
+    @if(books.Count == 0)
+{
+    <p> No books available</p>
+}
+else
+{
+    @foreach (var book in books)
+    {
+        <DisplayBook bookDto="book"  DeleteId="DeleteBook"/>
+    }
+}
+
+@code {
+
+    
+    private List<BookDto> books = new List<BookDto>()
+   {
+       new BookDto()
+      {
+        Id = Guid.NewGuid ()
+      
+      }
+   };
+
+    public void AddNewBook(BookDto book)
+    {
+        this.books.Add(book);
+    }
+    public void DeleteBook(Guid id)
+    {
+        try
+        {
+            var bookDelete = this.books.Find(x => x.Id == id);
+            this.books.Remove(bookDelete);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+    }
+
+}

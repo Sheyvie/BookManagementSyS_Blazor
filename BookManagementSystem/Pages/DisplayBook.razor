@@ -1,0 +1,30 @@
+﻿<div class="row">
+    <div class="col-3">
+        <h3>@bookDto.Title</h3>
+        <p> @bookDto.Description</p>
+        
+
+    </div>
+
+
+
+    <div class="col">
+       <button type="button" @onclick="DeleteBook" class="btn btn-danger btn-sm">Delete</button>
+       @* <button type="button" class="btn btn-danger btn-lg" @onclick="(() => Edit(taskDto))">Edit</button>*@
+    </div>
+
+</div>
+@code {
+
+    [Parameter]
+    public BookDto bookDto { get; set; }
+   
+
+    [Parameter]
+    public EventCallback<Guid> DeleteId { get; set; }
+
+    public async Task DeleteBook()
+    {
+        await DeleteId.InvokeAsync(bookDto.Id);
+    }
+}

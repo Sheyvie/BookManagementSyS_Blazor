@@ -1,0 +1,67 @@
+﻿
+<EditForm Model="newBook" OnValidSubmit="formSubmit">
+
+    <DataAnnotationsValidator />
+
+    <label> Title</label>
+    <InputText @bind-Value="@newBook.Title" class="form-control" />
+
+    <ValidationMessage For="(()=>newBook.Title)" />
+
+    <label> Description</label>
+    <InputText @bind-Value="@newBook.Description" class="form-control" />
+
+    <ValidationMessage For="(()=>newBook.Description)" />
+
+    @{
+        var i = 0;
+    }
+    @foreach (var author in newBook.Authors)
+    {
+        i++;
+
+        author.Id = i;
+
+        <label>Author</label>
+        <InputText @bind-Value="@author.AuthName" class="form-control"></InputText>
+        <ValidationMessage For="(()=>author.AuthName)" />
+    }
+
+    <button type="button" onclick="@(()=>newBook.Authors.Add(new Author()))" class=" mt-5 btn btn-primary">Add Author</button>
+
+    @* if you have two buttons, only one can have the type submit*@
+    <button type="submit" @onclick="InsertNewBook" class=" mt-5 btn btn-primary">Submit</button>
+
+    @*To reset the form once an update has been added*@
+    <button type="submit1" class=" mt-5 btn btn-secondary">Reset</button>
+
+   
+
+
+</EditForm>
+
+
+
+
+@code {
+    
+    public BookDto newBook = new BookDto()
+        {
+            Id = Guid.NewGuid()
+            
+        };
+    private void formSubmit()
+    {
+        //testing form
+        Console.WriteLine(newBook.Title);
+    }
+    [Parameter]
+    public EventCallback<BookDto> AddNewBook { get; set; }
+
+    public async Task InsertNewBook()
+    {
+        await AddNewBook.InvokeAsync(newBook);
+        newBook = new BookDto();
+    }
+    
+}
